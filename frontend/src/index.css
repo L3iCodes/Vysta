@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* Works for Chrome, Edge, Safari */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Works for Firefox */
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+@theme {  
+  --color-primary: #fafafa;
+  --color-secondary: #222222;
+  --color-accent: #FF7C35;
+}
+
+[data-theme='dark'] {
+  --color-primary: #111111;
+  --color-secondary: #eeeeee;
+  --color-accent: #FF7C35; /* can stay the same */
+}
+
+:root{
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--color-secondary);
+    background-color: var(--color-primary);
+}
+
+.wrapper {
+  @apply flex flex-row gap-[20px] mx-[20px] my-[20px] h-[calc(100vh-40px)] overflow-hidden relative;
+}
+
+.mobile-nav-element{
+  @apply flex justify-center items-center w-15 h-15 rounded-full bg-secondary/100 cursor-pointer text-primary hover:text-accent
+}
+
+.desktop-nav-element{
+  @apply text-primary w-10 h-10 p-2
+}
+
+.desktop-nav-element-wrapper{
+  @apply flex flex-row items-center rounded-[10px] cursor-pointer hover:bg-primary/20
+}
+
+.pageWrapper{
+  @apply flex flex-col w-full gap-[20px] overflow-y-auto
+}
