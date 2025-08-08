@@ -33,8 +33,6 @@ const options = {
 // Fetch Movie List [Trending, Upcoming, Latest]
 app.get('/movies/:type', async (req, res) => {
     const movieType = req.params.type;
-    console.log('Fetching movie type:', movieType);
-
     const url_upcoming = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`;
     const url_trending = 'https://api.themoviedb.org/3/trending/movie/day?language=en-US';
     const url_latest = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
@@ -61,8 +59,6 @@ app.get('/movies/:type', async (req, res) => {
 
 // Fetch genre list
 app.get('/genre-list', async (req, res) => {
-    console.log('Fetching genre list');
-
     const url = 'https://api.themoviedb.org/3/genre/movie/list?language=en';
     
     try{
@@ -148,8 +144,6 @@ app.get('/actor/:id', async (req, res) => {
 
 // Fetch movie by genre
 app.get('/movie/genre/:id/page/:page', async (req, res) => {
-    console.log('Fetching movie list by genre')
-
     const genreId = req.params.id;
     const genrePage = req.params.page
     const url = `https://api.themoviedb.org/3/discover/movie?with_genres=${genreId}&page=${genrePage}`
@@ -174,8 +168,6 @@ app.get(`/movie/search/:query/page/:page`, async (req, res) => {
     const query = req.params.query;
     const page = req.params.page;
     const url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=${page}`
-
-    console.log(`Fetching Movie:${query} page:${page} `)
 
     try{
         const response = await (fetch(url, options))
@@ -218,7 +210,6 @@ app.post(`/signup`, async (req, res) => {
         }else{
             const salt = 10;
             const hashedPassword = await bcrypt.hash(password, salt)
-            // console.log(`Saving user: ${username} - ${email} - ${hashedPassword}`)
 
             const newUser = new User({
                 username, 
@@ -239,7 +230,6 @@ const SECRET_KEY = process.env.JWT_SECRET;
 
 app.post('/login', async (req, res) => {
     const {username, password} = req.body;
-    // console.log(`Finding User: ${username} = ${password}`)
     
     try{
         const user = await User.find({
@@ -257,7 +247,6 @@ app.post('/login', async (req, res) => {
 
             if(isMatch){
                 const token = jwt.sign({username: user[0].username}, SECRET_KEY, {expiresIn: '1h'});
-                console.log('TOKEN' + token)
                 res.json({token: token, success: true, data:{  username: user[0].username, 
                                                                 watch_list: user[0].watch_list, 
                                                                 watched_list: user[0].watched_list
